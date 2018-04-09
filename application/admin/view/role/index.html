@@ -1,0 +1,154 @@
+{extend name="common/layout" /}
+
+{block name="content"}
+<div id="content">
+    <div class="page-header">
+        <div class="container-fluid">
+            <div class="pull-right">
+                <a href="{:url('set')}" data-toggle="tooltip" title="新增" class="btn btn-primary"> <i class="fa fa-plus"></i>
+                </a>
+                <button type="button" data-toggle="tooltip" title="删除" class="btn btn-danger" onclick="confirm('确认？') ? $('#form-index').submit() : false;">
+                    <i class="fa fa-trash-o"></i>
+                </button>
+            </div>
+            <h1>角色管理</h1>
+            <ul class="breadcrumb">
+                <li>
+                    <a href="{:url('site/index')}">首页</a>
+                </li>
+                <li>
+                    <a href="{:url('index')}">角色管理</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <i class="fa fa-list"></i>
+                    角色列表
+                </h3>
+            </div>
+            <div class="panel-body">
+
+                <form action="{:url('index')}" method="get">
+                    <div class="well">
+                        <div class="row">
+
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">角色</label>
+                                    <input type="text" name="title" value="{$title|default=''}" placeholder="请输入角色" id='title' class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">描述</label>
+                                    <input type="text" name="description" value="{$description|default=''}" placeholder="请输入描述" id='description' class="form-control">
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">是否为超管</label>
+                                    <select name="is_super"   id='is_super' class="form-control">
+                                        <option value=''>请选择</option>
+                                        <option value='1'>是</option>
+                                        <option value='0'>否</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">排序</label>
+                                    <input type="text" name="sort" value="{$sort|default=''}" placeholder="请输入排序" id='sort' class="form-control">
+                                </div>
+                            </div>
+
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <button type="submit" id="button-filter" class="btn btn-primary pull-right">
+                                    <i class="fa fa-search"></i>
+                                    筛选
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <form action="{:url('multi')}" method="post" id="form-index">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <td style="width: 1px;" class="text-center">
+                                        <input type="checkbox" onclick="$('input[name=\'selected[]\']').prop('checked', this.checked);" />
+                                    </td>
+
+                                    <td class="text-left">角色</td>
+
+
+                                    <td class="text-left">描述</td>
+
+
+                                    <td class="text-left">是否为超管</td>
+
+
+                                    <td class="text-left">排序</td>
+
+
+
+                                    <td class="text-right">管理</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                {foreach $paginate as $row}
+                                <tr>
+                                    <td class="text-center">
+                                        <input type="checkbox" name="selected[]" value="{$row['id']}" />
+                                    </td>
+
+                                    <td class="text-left">{$row['title']}</td>
+
+
+                                    <td class="text-left">{$row['description']}</td>
+
+
+                                    <td class="text-left">{$row['is_super']==1?'是':'否'}</td>
+
+
+                                    <td class="text-left">{$row['sort']}</td>
+
+
+
+                                    <td class="text-right">
+                                        <a href="{:url('set',['id'=>$row['id']])}" data-toggle="tooltip" title="编辑" class="btn btn-primary">
+                                            <i class="fa fa-pencil"></i>
+                                        </a>
+                                        <a href="{:url('setAction',['id'=>$row['id']])}" data-toggle="tooltip" title="授权" class="btn btn-danger">
+                                            <i class="glyphicon glyphicon-pawn"></i>
+                                        </a>
+
+                                    </td>
+                                </tr>
+                                {/foreach}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+                <div class="row">
+                    <div class="col-sm-6 text-left">
+                        {$paginate->render()}
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}

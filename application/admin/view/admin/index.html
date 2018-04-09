@@ -1,0 +1,135 @@
+{extend name="common/layout" /}
+
+{block name="content"}
+<div id="content">
+    <div class="page-header">
+        <div class="container-fluid">
+            <div class="pull-right">
+                <a href="{:url('set')}"data-toggle="modal"  title="新增" class="btn btn-primary" {if condition="!checkPrivForm('admin/admin-create')"}disabled{/if}> <i class="fa fa-plus"></i>
+                </a>
+                <button type="button" data-toggle="tooltip" title="删除" class="btn btn-danger" onclick="confirm('确认？') ? $('#form-index').submit() : false;" {if condition="!checkPrivForm('admin/admin/mulit')"}disabled  title='您没有权限' {/if}>
+                    <i class="fa fa-trash-o"></i>
+                </button>
+            </div>
+            <h1>管理员管理</h1>
+            <ul class="breadcrumb">
+                <li>
+                    <a href="{:url('site/index')}">首页</a>
+                </li>
+                <li>
+                    <a href="{:url('index')}">管理员管理</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <i class="fa fa-list"></i>
+                    管理员列表
+                </h3>
+            </div>
+            <div class="panel-body">
+
+
+                <form action="{:url('admin/index')}" method="get">
+                    <div class="well">
+                        <div class="row">
+
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">用户名</label>
+                                    <input type="text" name="username" value="{$username|default=''}" placeholder="用户名" id="input-filter_username" class="form-control" />
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <button type="submit" id="button-filter" class="btn btn-primary pull-right">
+                                    <i class="fa fa-search"></i>
+                                    筛选
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <form action="{:url('multi')}" method="post" id="form-index">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+
+                            <thead>
+                                <tr>
+                                    <td style="width:1px" class="text-center">
+                                        <input type='checkbox' onclick="$('input[name =\'selected[]\']').prop('checked', this.checked);"/>
+                                    </td>
+
+                                    <td class="text-center">
+
+                                        {if $order_order=='desc'}
+                                        <a href="{:url('admin/index',array('filed'=>'username','order'=>'asc',''))}" class='glyphicon glyphicon-arrow-up'>账号</a>
+                                        {else/}
+                                        <a href="{:url('admin/index',array('filed'=>'username','order'=>'desc',''))}" class='glyphicon glyphicon-arrow-up'>账号</a>
+                                        {/if}
+                                    </td>
+
+
+
+
+                                    <td class="text-center">密码</td>
+                                    <td class="text-center">账号创建时间</td>
+                                    <td class="text-center">操作</td>   
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                {foreach $paginate as $row}
+                                <tr>
+                                    <td style="width:1px" class="text-center">
+                                        <input type='checkbox' name='selected[]' value="{$row['id']}" />
+                                    </td>
+
+                                    <td  class="text-center">{$row['username']}</td>
+                                    <td class="text-center">{$row['password']}</td>
+                                    <td class="text-center">{$row['create_time']}</td>
+
+                                    <td class="text-center">
+                                        <a href="{:url('set',['id'=>$row['id']])}"data-toggle="modal"   title="编辑" class="btn btn-primary" {if condition="!checkPrivForm('admin/admin-edit')"}disabled{/if}>
+                                            <i class="fa fa-pencil"></i>
+                                        </a>                
+
+
+
+                                        <a href="{:url('setPassword',['id'=>$row['id']])}" data-toggle='tooltip' title="修改密码" class="btn btn-primary" {if condition="!checkPrivForm('admin/admin/setpassword')"}disabled{/if}>
+                                            <i class="fa fa-key"></i>
+                                        </a>
+
+
+
+                                    </td>
+                                </tr>
+                                {/foreach}
+
+
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+                <div class="row">
+                    <div class="col-sm-6 text-left">
+                        {$paginate->render()}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{/block}
+
+

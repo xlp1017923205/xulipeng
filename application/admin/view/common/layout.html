@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="zh-CN">
+    <head>
+        <meta charset="UTF-8" />
+        <title>{block name="title"}控制面板{/block}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
+        <link href="__STATIC__/bootstrap/css/bootstrap.min.css" type="text/css" rel="stylesheet" />
+        <link href="__STATIC__/font-awesome/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
+        <link href="__STATIC__/back/css/stylesheet.css" type="text/css" rel="stylesheet" media="screen" />
+        {block name="appendCss"}{/block}
+
+        <script type="text/javascript" src="__STATIC__/jquery/jquery-2.1.1.min.js"></script>
+        <script type="text/javascript" src="__STATIC__/bootstrap/js/bootstrap.min.js"></script>
+    </head>
+
+    <body>
+        <div id="container">
+            {include file="common/header" /}
+
+            {include file="common/nav" /}
+
+            {block name="content"}{/block}
+
+            {include file="common/footer" /}
+        </div>
+
+        <script src="__STATIC__/back/js/common.js" type="text/javascript">
+
+
+        </script>
+        {block name="appendJs"}{/block}
+    </body>
+</html>
+
+<script type="text/javascript">
+
+
+    //修改数据
+//    function xiugai() {
+//
+//        var id = $("#updatetext").val();
+//        $.ajax({
+//            url: 'http://localhost/shop/public/admin/admin/update',
+//            type: "POST",
+//            data: {username: $('#upusername').val(), password: $("#uppassword").val(), id: id},
+//            success: function (data) {
+//                $("myModal").modal("hide");
+//                window.location.href = "http://localhost/shop/public/admin/admin/index";
+//            }
+//        });
+//    }
+    //回显数据
+//    function danji(id) {
+//        $("#updatetext").val(id);
+//    
+//        $.ajax({
+//            url: 'http://localhost/shop/public/admin/admin/select',
+//            type: "POST",
+//            data: {id: id},
+//            success: function (data) {
+//
+//                $("#upusername").val(data['username']);
+//                $("#uppassword").val(data['password']);
+//            }
+//        });
+//    }
+
+    //重置密码123456
+//            function reset(id){
+//                
+//                $.ajax({
+//            url: 'http://localhost/shop/public/admin/admin/reset',
+//            type: "POST",
+//            data: {id: id},
+//            success: function (data){
+//                alert("重置密码成功！");
+//               window.location.reload();
+//            }
+//        });
+//                
+//            }
+
+    //添加操作
+//    function tianjia() {
+//        $.ajax({
+//            url: 'http://localhost/shop/public/admin/admin/insert',
+//            type: "POST",
+//            data: {username: $('#firstname').val(), password: $("#firstpwd").val()},
+//            success: function (data) {
+//                alert("添加成功！");
+//                window.location.href = "http://localhost/shop/public/admin/admin/index";
+//            }
+//        });
+//    }
+    
+    //删除操作
+    function shanchu(id) {
+        $.ajax({
+            url: 'http://localhost/shop/public/admin/admin/delete',
+            type: "POST",
+            data: {id: id},
+            success: function (data) {
+                alert("删除成功！");
+                window.location.reload();
+            }
+        });
+    }
+        
+
+
+
+
+
+
+</script>

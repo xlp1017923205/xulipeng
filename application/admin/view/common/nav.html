@@ -1,0 +1,83 @@
+<nav id="column-left" class="active">
+
+    <div id="profile">
+        <div>
+            <!-- <i class="fa fa-opencart"></i>
+            -->
+            <img src="__STATIC__/back/image/avatar.png" style="max-width:42px; max-height: 42px;"></div>
+        <div>
+            <h4>{$Think.session.admin.username}</h4>
+            <small>Administrator</small>
+        </div>
+    </div>
+    <ul id="menu">
+        <li id="dashboard">
+            <a href="{:url('admin/index')}">
+                <i class="fa fa-dashboard fa-fw"></i>
+                <span>管理首页</span>
+            </a>
+        </li>
+        <li id="catalog">
+
+            <ul>
+                <li>
+                    <a href="{:url('admin/admin/index')}">管理员管理</a>
+                </li>
+                <li>
+                    <a href="{:url('admin/role/index')}">角色权限管理</a>
+                </li>
+                <li>
+                    <a href="{:url('admin/category/index')}">产品管理</a>
+                </li>
+                <li>
+                    <a href="{:url('admin/brand/index')}">品牌管理</a>
+                </li>
+                <li>
+                    <a href="{:url('admin/make/table')}">生成cude</a>
+                </li>
+
+
+            </ul>
+        
+
+        <div id="stats">
+            <ul>
+                <li>
+                    <div>
+                        订单已经完成
+                        <span class="pull-right">0%</span>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="0"
+                             aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                            <span class="sr-only">0%</span>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        订单待处理
+                        <span class="pull-right">0%</span>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="0"
+                             aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                            <span class="sr-only">0%</span>
+                        </div>
+                    </div>
+                </li>
+                <li>
+                    <div>
+                        其它状态
+                        <span class="pull-right">0%</span>
+                    </div>
+                    <div class="progress">
+                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="0" aria-valuemin="0"
+                             aria-valuemax="100" style="width: 0%">
+                            <span class="sr-only">0%</span>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+</nav>

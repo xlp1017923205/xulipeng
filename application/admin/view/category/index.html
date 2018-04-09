@@ -1,0 +1,164 @@
+{extend name="common/layout" /}
+
+{block name="content"}
+<div id="content">
+    <div class="page-header">
+        <div class="container-fluid">
+            <div class="pull-right">
+                <a href="{:url('set')}"data-toggle="modal"  title="新增" class="btn btn-primary"> <i class="fa fa-plus"></i>
+                </a>
+                <button type="button" data-toggle="tooltip" title="删除" class="btn btn-danger" onclick="confirm('确认？') ? $('#form-index').submit() : false;">
+                    <i class="fa fa-trash-o"></i>
+                </button>
+            </div>
+            <h1>分类管理</h1>
+            <ul class="breadcrumb">
+                <li>
+                    <a href="{:url('site/index')}">首页</a>
+                </li>
+                <li>
+                    <a href="{:url('index')}">分类管理</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <i class="fa fa-list"></i>
+                    分类列表
+                </h3>
+            </div>
+            <div class="panel-body">
+
+
+                <form action="{:url('index')}" method="get">
+                    <div class="well">
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">分类</label>
+                                    <input type="text" name="title" value="{$title|default=''}" placeholder="分类" id="title" class="form-control" />
+                                </div>
+                            </div>                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">上级分类</label>
+                                    <input type="text" name="parent_id" value="{$parent_id|default=''}" placeholder="上级分类" id="parent_id" class="form-control" />
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <button type="submit" id="button-filter" class="btn btn-primary pull-right">
+                                    <i class="fa fa-search"></i>
+                                    筛选
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <form action="{:url('multi')}" method="post" id="form-index">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+
+                            <thead>
+                                <tr>
+                                    <td style="width:1px" class="text-center">
+                                        <input type='checkbox' onclick="$('input[name =\'selected[]\']').prop('checked', this.checked);"/>
+                                    </td>
+                                    <td class='text-left'>分类</td>
+
+                                    <td class='text-left'>上级分类</td>
+
+                                    <td class='text-left'>排序</td>
+
+                                    <td class='text-left'>启用</td>
+
+
+
+                                    <td class="text-rightr">管理</td>
+                                </tr>           
+
+                            </thead>
+                            <tbody>
+
+                                {foreach $rows as $row}
+                                <tr data-level="{$row['level']}" data-id='{$row.id}' data-pid ='{$row.parent_id}'>
+                                    <td style="width:1px" class="text-center">
+                                        <input type='checkbox' name='selected[]' value="{$row['id']}" />
+                                    </td>
+                                    
+
+                                    <td class='text-left td-title'>
+                                        {:str_repeat('&nbsp;',$row['level']*4)}
+                                        {$row['title']}</td>
+                                    <td class='text-left'>{$row['parent_id']}</td>
+                                    <td class='text-left'>{$row['sort']}</td>    
+                                    <td class='text-left'>{$row['is_used']}</td> 
+
+
+                                    <td class="text-right">
+                                        <a href="{:url('set',['id'=>$row['id']])}" data-toggle='tooltip' title="编辑" class="btn btn-primary">
+                                            <i class="fa fa-key"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {/foreach}
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+           
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(function(){
+        $("tbody tr[data-level!='0']").hide();
+        //当点击行中的标题字段的时候，就会进行展开折叠内容
+        $('td.td-title').click(function(){
+            //获取点击的当前字段
+            var currTr = $(this).parent();
+            //遍历所有行
+            var allTr = $('tbody tr');
+             //获取当前的脚标
+            var index = allTr.index(currTr);
+            //获取当前的level值
+            var level = currTr.data('level');
+            //遍历所有行
+            for(var i = index+1;i<allTr.length;i++){
+                //得到遍历的level
+                var curLevel = $(allTr[i]).data('level');
+                //判断什么时候不是我的子分类
+                if(curLevel<=level){
+                    //结束循环
+                    break;
+                }
+                //隐藏或展示子分类
+                if(curLevel == level+1){
+                    //如果是隐藏的就展开  展开的就隐藏起来
+                    $(allTr[i]).toggle();
+                }
+                
+                 //判断子分类以外的分类
+                if(curLevel > level+1){
+                    //如果是隐藏的就展开  展开的就隐藏起来
+                    $(allTr[i]).hide();
+                }
+                
+                
+        }
+    });
+    });
+</script>
+{/block}
+
+
+

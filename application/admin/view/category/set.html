@@ -1,0 +1,141 @@
+{extend name="common/layout" /}
+
+{block name="content"}
+<div id="content">
+
+    <div class="page-header">
+        <div class="container-fluid">
+            <div class="pull-right">
+                <button type="submit" form="form-set" data-toggle="tooltip" title="保存" class="btn btn-primary">
+                    <i class="fa fa-save"></i>
+                </button>
+                <a href="{:url('index')}" data-toggle="tooltip" title="取消" class="btn btn-default">
+                    <i class="fa fa-reply"></i>
+                </a>
+            </div>
+            <h1>分类{if condition="$id"}编辑{else/}创建{/if}</h1>
+            <ul class="breadcrumb">
+                <li>
+                    <a href="{:url('site/index')}">首页</a>
+                </li>
+                <li>
+                    <a href="{:url('index')}">分类</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <i class="fa fa-pencil"></i>
+                    分类{if condition="$id"}编辑{else/}创建{/if}
+                </h3>
+            </div>
+            <div class="panel-body">
+                <form action="{:url('set', ['id'=>$id])}" method="post" enctype="multipart/form-data" id="form-set" class="form-horizontal">
+
+                    {if condition="$id"}
+                    <input type="hidden" name="id" value="{$id}">
+                    {/if}
+                    <ul class="nav nav-tabs">
+                        <li class="active">
+                            <a href="#tab-general" data-toggle="tab">基本信息</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content"> <!--        //新增页面-->
+                        <div class="tab-pane active" id="tab-general">
+
+                            <div class="form-group">
+                                <label class=" col-sm-2 control-label" for="input-title">分类</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="title" value="{$data['title']|default=''}" placeholder="请输入分类内容" id="input_title" class="form-control" />
+                                    {if condition="isset($message['title'])"}
+                                    <label for="input-title" class="text-danger">{$message['title']}</label>
+                                    {/if}
+                                </div>
+
+                            </div>                                    
+                            <div class="form-group">
+                                <label class=" col-sm-2 control-label" for="input-parent_id">上级分类</label>
+                                <div class="col-sm-10">
+                                    <select name="parent_id" id="input-parent_id" class="form-control">
+                                        <option value="0">顶级分类</option>
+                                        {foreach $rows as $row}
+                                        <option value="{$row['id']}"
+                                                {if condition="isset($data['parent_id'])&&$data['parent_id']==$row['id']" }selected{/if}>
+                                                {:str_repeat('&nbsp;',$row['level']*4)}{$row['title']}</option>
+                                        {/foreach}
+                                    </select>
+                                    {if condition="isset($message['parent_id'])"}
+                                    <label for="input-parent_id" class="text-danger">{$message['parent_id']}</label>
+                                    {/if}
+                                </div>
+
+                            </div>                                    <div class="form-group">
+                                <label class=" col-sm-2 control-label" for="input-sort">排序</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="sort" value="{$data['sort']|default=''}" placeholder="请输入排序内容" id="input_sort" class="form-control" />
+                                    {if condition="isset($message['sort'])"}
+                                    <label for="input-sort" class="text-danger">{$message['sort']}</label>
+                                    {/if}
+                                </div>
+
+                            </div>                                    <div class="form-group">
+                                <label class=" col-sm-2 control-label" for="input-is_used">启用</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="is_used" value="{$data['is_used']|default=''}" placeholder="请输入启用内容" id="input_is_used" class="form-control" />
+                                    {if condition="isset($message['is_used'])"}
+                                    <label for="input-is_used" class="text-danger">{$message['is_used']}</label>
+                                    {/if}
+                                </div>
+
+                            </div>                                    <div class="form-group">
+                                <label class=" col-sm-2 control-label" for="input-meta_title">SEO标题</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="meta_title" value="{$data['meta_title']|default=''}" placeholder="请输入SEO标题内容" id="input_meta_title" class="form-control" />
+                                    {if condition="isset($message['meta_title'])"}
+                                    <label for="input-meta_title" class="text-danger">{$message['meta_title']}</label>
+                                    {/if}
+                                </div>
+
+                            </div>                                    <div class="form-group">
+                                <label class=" col-sm-2 control-label" for="input-meta_keywords">SEO关键字</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="meta_keywords" value="{$data['meta_keywords']|default=''}" placeholder="请输入SEO关键字内容" id="input_meta_keywords" class="form-control" />
+                                    {if condition="isset($message['meta_keywords'])"}
+                                    <label for="input-meta_keywords" class="text-danger">{$message['meta_keywords']}</label>
+                                    {/if}
+                                </div>
+
+                            </div>                                    <div class="form-group">
+                                <label class=" col-sm-2 control-label" for="input-meta_description">SEO描述</label>
+                                <div class="col-sm-10">
+                                    <input type="text" name="meta_description" value="{$data['meta_description']|default=''}" placeholder="请输入SEO描述内容" id="input_meta_description" class="form-control" />
+                                    {if condition="isset($message['meta_description'])"}
+                                    <label for="input-meta_description" class="text-danger">{$message['meta_description']}</label>
+                                    {/if}
+                                </div>
+
+                            </div>      
+
+
+
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}
+
+{block name="appendCss"}
+{/block}
+
+{block name="appendJs"}
+<script src="__STATIC__/validate/jquery.validate.min.js"></script>
+<script src="__STATIC__/validate/additional-methods.min.js"></script>
+<script src="__STATIC__/validate/localization/messages_zh.min.js"></script>
+
+{/block}

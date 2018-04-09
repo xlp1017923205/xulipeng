@@ -1,0 +1,121 @@
+{extend name="common/layout" /}
+
+{block name="content"}
+<div id="content">
+    <div class="page-header">
+        <div class="container-fluid">
+            <div class="pull-right">
+                <a href="{:url('set')}"data-toggle="modal"  title="新增" class="btn btn-primary"> <i class="fa fa-plus"></i>
+                </a>
+                <button type="button" data-toggle="tooltip" title="删除" class="btn btn-danger" onclick="confirm('确认？') ? $('#form-index').submit() : false;">
+                    <i class="fa fa-trash-o"></i>
+                </button>
+            </div>
+            <h1>动作管理</h1>
+            <ul class="breadcrumb">
+                <li>
+                    <a href="{:url('site/index')}">首页</a>
+                </li>
+                <li>
+                    <a href="{:url('index')}">动作管理</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    <i class="fa fa-list"></i>
+                    动作列表
+                </h3>
+            </div>
+            <div class="panel-body">
+
+
+                <form action="{:url('index')}" method="get">
+                    <div class="well">
+                        <div class="row">
+                                                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">权限</label>
+                                    <input type="text" name="title" value="{$title|default=''}" placeholder="权限" id="title" class="form-control" />
+                                </div>
+                            </div>                            <div class="col-sm-4">
+                                <div class="form-group">
+                                    <label class="control-label">规则</label>
+                                    <input type="text" name="rule" value="{$rule|default=''}" placeholder="规则" id="rule" class="form-control" />
+                                </div>
+                            </div>
+                           
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-12 col-md-12 col-lg-12">
+                                <button type="submit" id="button-filter" class="btn btn-primary pull-right">
+                                    <i class="fa fa-search"></i>
+                                    筛选
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <form action="{:url('multi')}" method="post" id="form-index">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-hover">
+
+                            <thead>
+                                <tr>
+                                    <td style="width:1px" class="text-center">
+                                        <input type='checkbox' onclick="$('input[name =\'selected[]\']').prop('checked', this.checked);"/>
+                                    </td>
+                                                                                          <td class='text-left'>权限</td>
+
+                                                  <td class='text-left'>规则</td>
+
+                                                  <td class='text-left'>描述</td>
+
+
+                                        
+                                        <td class="text-rightr">管理</td>
+                                </tr>           
+                 
+                            </thead>
+                            <tbody>
+
+                                {foreach $paginate as $row}
+                                <tr>
+                                    <td style="width:1px" class="text-center">
+                                        <input type='checkbox' name='selected[]' value="{$row['id']}" />
+                                    </td>
+
+                                                                                      <td class='text-left'>{$row['title']}</td>                                                  <td class='text-left'>{$row['rule']}</td>                                                  <td class='text-left'>{$row['description']}</td> 
+
+                                    <td class="text-right">
+                                        <a href="{:url('set',['id'=>$row['id']])}" data-toggle='tooltip' title="编辑" class="btn btn-primary">
+                                            <i class="fa fa-key"></i>
+                                        </a>
+                                    </td>
+                                </tr>
+                                {/foreach}
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </form>
+                <div class="row">
+                    <div class="col-sm-6 text-left">
+                        {$paginate->render()}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{/block}
+
+
+
